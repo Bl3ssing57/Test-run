@@ -1,101 +1,164 @@
-/* Global Theme Colors */
+/* =====================================
+   Crown Yourself - Main Theme CSS
+   Purple & Rose-Gold Theme
+   ===================================== */
+
+/* ---------- Root Colors ---------- */
 :root {
     --purple: #6A0DAD;
-    --light-purple: #DCC7FF;
+    --light-purple: #F2E9FF;
     --rose-gold: #B76E79;
-    --white: #fff;
-    --dark: #333;
+    --dark-text: #333333;
+    --white: #ffffff;
 }
 
-/* Body */
-body {
-    font-family: "Poppins", sans-serif;
-    background-color: var(--light-purple);
-    color: var(--dark);
+/* ---------- Global Reset ---------- */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Navbar */
+/* ---------- Body ---------- */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-purple);
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
+/* ---------- Navbar ---------- */
 .purple-bg {
     background-color: var(--purple);
 }
 
 .navbar-brand {
+    font-weight: bold;
     color: var(--rose-gold) !important;
 }
 
-/* Hero */
-.hero {
-    background: url('../images/hero.jpg') center/cover no-repeat;
-    height: 70vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+.nav-link {
+    color: var(--white) !important;
+    margin-left: 10px;
 }
 
-.overlay {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background: rgba(106, 13, 173, 0.4);
+.nav-link:hover {
+    color: var(--rose-gold) !important;
+}
+
+/* ---------- Hero Section ---------- */
+.hero {
+    height: 70vh;
+    background: linear-gradient(
+        rgba(106, 13, 173, 0.6),
+        rgba(106, 13, 173, 0.6)
+    ),
+    url("../images/hero.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .hero-text {
     color: var(--white);
     font-size: 3rem;
-    z-index: 10;
-    text-align: center;
+    font-weight: bold;
 }
 
-/* Boxes */
-.box {
-    background: var(--white);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    border: 2px solid var(--rose-gold);
-}
-
-/* Section Title */
+/* ---------- Section Titles ---------- */
 .section-title {
     color: var(--purple);
     font-weight: bold;
     margin-bottom: 20px;
+    text-align: center;
 }
 
-/* Gallery */
+/* ---------- Content Boxes ---------- */
+.box {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid var(--rose-gold);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* ---------- Lists ---------- */
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* ---------- Gallery ---------- */
 .gallery-img {
     width: 100%;
+    height: auto;
     border-radius: 12px;
     border: 3px solid var(--rose-gold);
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-/* Feedback Form */
+/* ---------- Feedback Form ---------- */
+.feedback-form {
+    max-width: 500px;
+    margin: auto;
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    border: 2px solid var(--rose-gold);
+}
+
+.feedback-form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
 .feedback-form input,
 .feedback-form textarea {
     width: 100%;
     padding: 12px;
+    margin-top: 5px;
     margin-bottom: 15px;
-    border: 2px solid var(--rose-gold);
     border-radius: 8px;
+    border: 1px solid #ccc;
 }
 
+/* ---------- Buttons ---------- */
 .btn-submit {
     background-color: var(--rose-gold);
     color: var(--white);
-    padding: 12px 20px;
-    border-radius: 8px;
+    padding: 12px;
     border: none;
+    border-radius: 8px;
     width: 100%;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-/* Footer */
+.btn-submit:hover {
+    background-color: #9f5963;
+}
+
+/* ---------- Footer ---------- */
 .footer {
-    background: var(--purple);
+    background-color: var(--purple);
     color: var(--white);
     text-align: center;
     padding: 15px;
     margin-top: 40px;
+}
+
+/* ---------- Responsive Text ---------- */
+@media (max-width: 768px) {
+    .hero-text {
+        font-size: 2rem;
+    }
 }
