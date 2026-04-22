@@ -1,27 +1,24 @@
-/* =====================================
-   Crown Yourself - Main Theme CSS
+/* =====================================/* =================================   Crown Yourself Website
    Purple & Rose-Gold Theme
    ===================================== */
 
-/* ---------- Root Colors ---------- */
+/* ---------- Root Theme Colors ---------- */
 :root {
-    --purple: #6A0DAD;
-    --light-purple: #F2E9FF;
-    --rose-gold: #B76E79;
-    --dark-text: #333333;
+    --purple: #6a0dad;
+    --light-purple: #f3ebff;
+    --rose-gold: #b76e79;
+    --dark-text: #333;
     --white: #ffffff;
 }
 
-/* ---------- Global Reset ---------- */
+/* ---------- Global Styles ---------- */
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
-/* ---------- Body ---------- */
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
     background-color: var(--light-purple);
     color: var(--dark-text);
     line-height: 1.6;
@@ -39,7 +36,6 @@ body {
 
 .nav-link {
     color: var(--white) !important;
-    margin-left: 10px;
 }
 
 .nav-link:hover {
@@ -49,14 +45,13 @@ body {
 /* ---------- Hero Section ---------- */
 .hero {
     height: 70vh;
-    background: linear-gradient(
+    background-image: linear-gradient(
         rgba(106, 13, 173, 0.6),
         rgba(106, 13, 173, 0.6)
     ),
     url("../images/hero.jpg");
-    background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
+    background-position: center;
 
     display: flex;
     align-items: center;
@@ -68,83 +63,72 @@ body {
     color: var(--white);
     font-size: 3rem;
     font-weight: bold;
+    padding: 20px;
 }
 
-/* ---------- Section Titles ---------- */
+/* ---------- Page Headings ---------- */
 .section-title {
+    text-align: center;
     color: var(--purple);
     font-weight: bold;
     margin-bottom: 20px;
-    text-align: center;
 }
 
-/* ---------- Content Boxes ---------- */
+/* ---------- Content Cards ---------- */
 .box {
     background-color: var(--white);
-    padding: 25px;
-    border-radius: 12px;
     border: 2px solid var(--rose-gold);
+    border-radius: 10px;
+    padding: 25px;
     margin-bottom: 20px;
     text-align: center;
 }
 
-/* ---------- Lists ---------- */
-ul {
-    padding-left: 20px;
-}
-
-li {
-    margin-bottom: 8px;
-}
-
-/* ---------- Gallery ---------- */
+/* ---------- Gallery Images ---------- */
 .gallery-img {
     width: 100%;
-    height: auto;
-    border-radius: 12px;
+    border-radius: 10px;
     border: 3px solid var(--rose-gold);
     margin-bottom: 20px;
 }
 
 /* ---------- Feedback Form ---------- */
 .feedback-form {
-    max-width: 500px;
-    margin: auto;
     background-color: var(--white);
     padding: 30px;
     border-radius: 12px;
     border: 2px solid var(--rose-gold);
+    max-width: 500px;
+    margin: auto;
 }
 
 .feedback-form label {
     font-weight: bold;
-    margin-top: 10px;
 }
 
 .feedback-form input,
 .feedback-form textarea {
     width: 100%;
     padding: 12px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border-radius: 8px;
+    margin: 10px 0 15px;
+    border-radius: 6px;
     border: 1px solid #ccc;
 }
 
-/* ---------- Buttons ---------- */
+/* ---------- Button ---------- */
 .btn-submit {
     background-color: var(--rose-gold);
     color: var(--white);
     padding: 12px;
     border: none;
     border-radius: 8px;
-    width: 100%;
     font-weight: bold;
     cursor: pointer;
+    width: 100%;
 }
 
 .btn-submit:hover {
-    background-color: #9f5963;
+    background-color: #9d5b66;
 }
 
 /* ---------- Footer ---------- */
@@ -156,9 +140,15 @@ li {
     margin-top: 40px;
 }
 
-/* ---------- Responsive Text ---------- */
+/* ---------- Mobile Responsive ---------- */
 @media (max-width: 768px) {
     .hero-text {
         font-size: 2rem;
     }
 }
+``
+
+ 
+
+   
+  
