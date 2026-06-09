@@ -1,67 +1,803 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crown Yourself | Home</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kgosi Bathoen II Museum — Kanye, Botswana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- Bootstrap CSS -->
-    https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css
+    :root {
+      --earth:    #2C1D10;
+      --sienna:   #7A3B1E;
+      --ochre:    #C97D2E;
+      --sand:     #E8D5B0;
+      --bone:     #F5EFE3;
+      --sky:      #8BAAB4;
+      --ink:      #1A1209;
 
-    <!-- Custom CSS -->
-    css/style.css
+      --display:  'Cormorant Garamond', Georgia, serif;
+      --body:     'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bone);
+      color: var(--ink);
+      font-family: var(--body);
+      font-weight: 300;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4vw;
+      background: transparent;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(245, 239, 227, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(122,59,30,0.15);
+    }
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--bone);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      line-height: 1.2;
+    }
+    nav.scrolled .nav-logo { color: var(--earth); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245,239,227,0.8);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    nav.scrolled .nav-links a { color: var(--sienna); }
+    .nav-links a:hover { color: var(--ochre); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 8vw 8vh;
+      background: var(--earth);
+      overflow: hidden;
+    }
+
+    /* Kente-inspired geometric border — the signature element */
+    .hero-border {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--ochre) 0px, var(--ochre) 16px,
+        var(--sienna) 16px, var(--sienna) 24px,
+        var(--sand) 24px, var(--sand) 32px,
+        var(--sienna) 32px, var(--sienna) 40px,
+        var(--ochre) 40px, var(--ochre) 56px,
+        var(--earth) 56px, var(--earth) 64px
+      );
+    }
+
+    /* Large decorative background lettering */
+    .hero-ghost {
+      position: absolute;
+      right: -2vw;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--display);
+      font-size: clamp(8rem, 20vw, 22rem);
+      font-weight: 600;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* Decorative arch motif */
+    .hero-arch {
+      position: absolute;
+      top: 6px;
+      right: 8vw;
+      width: 280px;
+      height: 360px;
+      border: 1px solid rgba(201,125,46,0.2);
+      border-radius: 140px 140px 0 0;
+      pointer-events: none;
+    }
+    .hero-arch::before {
+      content: '';
+      position: absolute;
+      top: 20px; left: 20px; right: 20px; bottom: -20px;
+      border: 1px solid rgba(201,125,46,0.12);
+      border-radius: 120px 120px 0 0;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--bone);
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.01em;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--sand);
+    }
+
+    .hero-sub {
+      font-family: var(--display);
+      font-size: clamp(1rem, 2.5vw, 1.6rem);
+      font-style: italic;
+      color: var(--sky);
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+
+    .hero-tagline {
+      max-width: 520px;
+      font-size: 0.875rem;
+      color: rgba(232,213,176,0.7);
+      line-height: 1.8;
+      margin-bottom: 3.5rem;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: var(--ochre);
+      color: var(--ink);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--sand); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      color: var(--sand);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(232,213,176,0.35);
+      transition: border-color 0.25s, color 0.25s, transform 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--ochre);
+      color: var(--ochre);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 4vw;
+      writing-mode: vertical-rl;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(201,125,46,0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 60px;
+      background: var(--ochre);
+      opacity: 0.3;
+    }
+
+    /* ── SECTION DEFAULTS ── */
+    section { padding: 7rem 8vw; }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--earth);
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      background: var(--bone);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8vw;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+    .about-rect {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--sienna);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-rect::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 24px,
+        rgba(255,255,255,0.04) 24px,
+        rgba(255,255,255,0.04) 25px
+      );
+    }
+    .about-rect-inner {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      width: 80%;
+      height: 80%;
+      border: 1px solid var(--ochre);
+      opacity: 0.4;
+    }
+    .about-year {
+      position: absolute;
+      top: -1rem;
+      left: -1.5rem;
+      font-family: var(--display);
+      font-size: clamp(4rem, 8vw, 7rem);
+      font-weight: 600;
+      color: var(--ochre);
+      opacity: 0.2;
+      line-height: 1;
+    }
+    .about-caption {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 2.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--sand);
+      font-weight: 400;
+    }
+
+    .about-content p {
+      font-size: 0.95rem;
+      color: #3a2810;
+      margin-bottom: 1.25rem;
+      line-height: 1.85;
+    }
+    .about-content .lead {
+      font-family: var(--display);
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      font-style: italic;
+      color: var(--sienna);
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+      font-weight: 400;
+    }
+
+    /* ── COLLECTIONS ── */
+    .collections {
+      background: var(--earth);
+      color: var(--bone);
+    }
+    .collections h2 { color: var(--sand); }
+    .collections .section-label { color: var(--ochre); }
+
+    .collections-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem;
+    }
+    .collections-intro p {
+      font-size: 0.9rem;
+      color: rgba(232,213,176,0.7);
+      line-height: 1.85;
+    }
+
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .collection-item {
+      padding: 2.5rem 1.75rem;
+      border: 1px solid rgba(201,125,46,0.15);
+      border-right: none;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .collection-item:last-child { border-right: 1px solid rgba(201,125,46,0.15); }
+    .collection-item:hover { background: rgba(201,125,46,0.07); }
+
+    .collection-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+      opacity: 0.7;
+    }
+    .collection-item h3 {
+      font-family: var(--display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--sand);
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+    .collection-item p {
+      font-size: 0.78rem;
+      color: rgba(232,213,176,0.55);
+      line-height: 1.7;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      background: var(--sand);
+    }
+    .timeline-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+    }
+    .timeline-header p {
+      font-size: 0.9rem;
+      color: var(--sienna);
+      line-height: 1.85;
+      align-self: end;
+    }
+
+    .timeline-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--sienna);
+      opacity: 0.3;
+    }
+    .timeline-event {
+      padding: 0 2rem 2rem 0;
+    }
+    .timeline-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--sienna);
+      background: var(--sand);
+      position: relative;
+      margin-bottom: 1.5rem;
+      transition: background 0.3s;
+    }
+    .timeline-event:hover .timeline-dot { background: var(--ochre); border-color: var(--ochre); }
+    .timeline-year {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-event h3 {
+      font-family: var(--display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--earth);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-event p {
+      font-size: 0.8rem;
+      color: var(--sienna);
+      line-height: 1.75;
+      opacity: 0.8;
+    }
+
+    /* ── VISIT ── */
+    .visit {
+      background: var(--bone);
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 8vw;
+      align-items: start;
+    }
+    .visit h2 { margin-bottom: 2rem; }
+    .visit-detail {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid rgba(122,59,30,0.12);
+    }
+    .visit-detail:last-of-type { border-bottom: none; }
+    .visit-detail-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .visit-detail p {
+      font-size: 0.875rem;
+      color: var(--earth);
+      line-height: 1.7;
+    }
+
+    .visit-aside {
+      background: var(--sienna);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .visit-aside::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--ochre);
+    }
+    .visit-aside h3 {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--bone);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .visit-aside p {
+      font-size: 0.83rem;
+      color: rgba(232,213,176,0.75);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 4rem 8vw 3rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 4rem;
+      border-top: 4px solid transparent;
+      border-image: repeating-linear-gradient(
+        90deg,
+        var(--ochre) 0px, var(--ochre) 16px,
+        var(--sienna) 16px, var(--sienna) 24px,
+        var(--earth) 24px, var(--earth) 40px
+      ) 4;
+    }
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      color: var(--sand);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .footer-brand em { font-style: italic; color: var(--ochre); }
+    footer p {
+      font-size: 0.78rem;
+      color: rgba(232,213,176,0.4);
+      line-height: 1.8;
+    }
+    .footer-col h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.6rem; }
+    .footer-col a {
+      font-size: 0.8rem;
+      color: rgba(232,213,176,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--ochre); }
+    .footer-bottom {
+      grid-column: 1 / -1;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.72rem;
+      color: rgba(232,213,176,0.25);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about, .visit { grid-template-columns: 1fr; }
+      .about-visual { display: none; }
+      .collections-intro, .timeline-header { grid-template-columns: 1fr; }
+      .collection-grid { grid-template-columns: 1fr 1fr; }
+      .collection-item:nth-child(2) { border-right: 1px solid rgba(201,125,46,0.15); }
+      .timeline-track { grid-template-columns: 1fr; }
+      .timeline-track::before { display: none; }
+      footer { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      .hero-arch { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark purple-bg">
-    <div class="container">
-        index.htmlCrown Yourself</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">Kgosi Bathoen II<br>Museum</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#history">History</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+  </nav>
 
-        <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">about.htmlAbout</a></li>
-                <li class="nav-item">healing.htmlHealing</a></li>
-                <li class="nav-item">gallery.htmlGallery</a></li>
-                <li class="nav-item">feedback.htmlFeedback</a></li>
-            </ul>
-        </div>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-border"></div>
+    <div class="hero-ghost">KB II</div>
+    <div class="hero-arch"></div>
+
+    <p class="hero-eyebrow">Kanye, Botswana · Est. 1960s</p>
+    <h1 class="hero-title">
+      Custodian of<br>
+      <em>Memory &amp; Land</em>
+    </h1>
+    <p class="hero-sub">The Museum of the Bangwaketse</p>
+    <p class="hero-tagline">
+      Where the Kalahari's natural world meets the living culture of its people —
+      a heritage institution founded on the belief that knowledge must be documented,
+      protected, and passed on.
+    </p>
+    <div class="hero-actions">
+      <a href="#visit" class="btn-primary">Plan Your Visit</a>
+      <a href="#collections" class="btn-ghost">Explore Collections</a>
     </div>
-</nav>
 
-<header class="hero">
-    <h1 class="hero-text">Heal. Grow. Thrive.<br>Crown Yourself.</h1>
-</header>
+    <div class="hero-scroll">Scroll</div>
+  </section>
 
-<section class="container text-center mt-5">
-    <h2 class="section-title">Welcome to Your Healing Space</h2>
-    <p>A safe place for self‑empowerment, reflection and emotional healing.</p>
-
-    <div class="row mt-4">
-        <div class="col-md-4 box">
-            <h4>Empowerment</h4>
-            <p>Grow confidence and reclaim your inner strength.</p>
-        </div>
-        <div class="col-md-4 box">
-            <h4>Healing</h4>
-            <p>Heal emotionally at your own pace.</p>
-        </div>
-        <div class="col-md-4 box">
-            <h4>Affirmations</h4>
-            <p>Positive words to guide your journey.</p>
-        </div>
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-visual">
+      <div class="about-rect">
+        <div class="about-rect-inner"></div>
+        <p class="about-caption">Kgosi Bathoen Gaseitsiwe II · Paramount Chief, Bangwaketse</p>
+      </div>
+      <div class="about-year">1960</div>
     </div>
-</section>
+    <div class="about-content">
+      <p class="section-label">About the Museum</p>
+      <h2>A Vision Born<br>of Leadership</h2>
+      <br>
+      <p class="lead">
+        "Heritage is a form of knowledge — it must be documented, protected, and passed on."
+      </p>
+      <p>
+        Bathoen Gaseitsiwe, Kgosi Bathoen II of the Bangwaketse, was a rare figure: a paramount chief whose intellectual curiosity matched his political authority. Educated during the colonial era, he engaged deeply with natural history, taxonomy, and the documentation of wildlife — collecting and preserving specimens that spoke to the fauna of his land.
+      </p>
+      <p>
+        Over time his vision expanded. Cultural artefacts, oral traditions, and photographs of the Bangwaketse people joined his natural history holdings, unified by the belief that environment, history, and culture are inseparable. In the 1960s that vision became an institution — housed in a repurposed London Missionary Society building in Kanye, one of the earliest formal heritage spaces in Botswana.
+      </p>
+      <a href="#history" class="btn-primary" style="margin-top:1rem; display:inline-block;">Read the Full Story</a>
+    </div>
+  </section>
 
-<footer class="footer">
-    <p>© 2026 Crown Yourself</p>
-</footer>
+  <!-- COLLECTIONS -->
+  <section class="collections" id="collections">
+    <div class="collections-intro">
+      <div>
+        <p class="section-label">What We Hold</p>
+        <h2>Five Pillars<br>of Heritage</h2>
+      </div>
+      <p>
+        The museum's holdings reflect Kgosi Bathoen II's integrated worldview — that a people's story cannot be told without its land, its objects, its voices, and its images. Each collection is both archive and living resource for researchers, students, and communities.
+      </p>
+    </div>
 
-<!-- Bootstrap JS -->
-https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js</script>
+    <div class="collection-grid">
+      <div class="collection-item">
+        <div class="collection-icon">🦁</div>
+        <h3>Natural History</h3>
+        <p>Mounted specimens, taxonomic records, and fauna of the Kalahari and surrounding region, reflecting the chief's early scientific practice.</p>
+      </div>
+      <div class="collection-item">
+        <div class="collection-icon">🏺</div>
+        <h3>Archaeology</h3>
+        <p>Materials excavated from settlements across the region, tracing millennia of human presence in southern Botswana.</p>
+      </div>
+      <div class="collection-item">
+        <div class="collection-icon">🧶</div>
+        <h3>Ethnography</h3>
+        <p>Cultural objects, tools, textiles, and everyday artefacts that document the lived practices of the Bangwaketse and neighbouring communities.</p>
+      </div>
+      <div class="collection-item">
+        <div class="collection-icon">📷</div>
+        <h3>Photography &amp; Oral History</h3>
+        <p>Photographs and recorded oral traditions preserving voices, faces, and stories that written archives could not capture alone.</p>
+      </div>
+    </div>
+  </section>
 
+  <!-- TIMELINE -->
+  <section class="timeline" id="history">
+    <div class="timeline-header">
+      <div>
+        <p class="section-label">A Living Legacy</p>
+        <h2>From Personal Collection<br>to National Institution</h2>
+      </div>
+      <p>
+        The museum's story is one of vision, dormancy, and revival. Three moments define its arc — and each reflects the enduring relevance of Kgosi Bathoen II's original conviction.
+      </p>
+    </div>
+
+    <div class="timeline-track">
+      <div class="timeline-event">
+        <div class="timeline-dot"></div>
+        <p class="timeline-year">1960s</p>
+        <h3>The Founding</h3>
+        <p>Bathoen Gaseitsiwe establishes the museum in a repurposed London Missionary Society building in Kanye — one of Botswana's first formal heritage institutions, born from a lifetime of collecting.</p>
+      </div>
+      <div class="timeline-event">
+        <div class="timeline-dot"></div>
+        <p class="timeline-year">After Independence</p>
+        <h3>A Period of Quiet</h3>
+        <p>Following its initial flourishing, the museum enters a period of decline. The collections survive, awaiting those who would return them to public life.</p>
+      </div>
+      <div class="timeline-event">
+        <div class="timeline-dot"></div>
+        <p class="timeline-year">1998</p>
+        <h3>Revival</h3>
+        <p>Community practitioner Abraham Kesupile leads the effort to restore the museum. The institution reopens as a public space for memory, learning, and cultural engagement — the original vision renewed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section class="visit" id="visit">
+    <div>
+      <p class="section-label">Plan Your Visit</p>
+      <h2>Come to Kanye</h2>
+
+      <div class="visit-detail">
+        <p class="visit-detail-label">Location</p>
+        <p>Kanye, Ngwaketse Sub-District<br>Southern District, Botswana</p>
+      </div>
+      <div class="visit-detail">
+        <p class="visit-detail-label">Opening Hours</p>
+        <p>Monday – Friday: 8:00 am – 5:00 pm<br>Saturday: 9:00 am – 1:00 pm<br>Sunday &amp; Public Holidays: Closed</p>
+      </div>
+      <div class="visit-detail">
+        <p class="visit-detail-label">What to Expect</p>
+        <p>Permanent galleries, rotating exhibitions, guided tours, research access, and education programmes for schools and community groups.</p>
+      </div>
+      <div class="visit-detail">
+        <p class="visit-detail-label">Contact</p>
+        <p>For group bookings, research enquiries, or heritage tourism partnerships, reach us directly at the museum in Kanye.</p>
+      </div>
+    </div>
+
+    <div class="visit-aside">
+      <h3>Education &amp; Research</h3>
+      <p>
+        The museum is an active partner for schools, universities, and independent researchers across Botswana and beyond. We offer structured school visits, access to archival collections, and support for community history projects.
+      </p>
+      <a href="#" class="btn-primary">Enquire About Access</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-brand">Kgosi Bathoen II<br><em>Museum</em></div>
+      <p>A living heritage institution in Kanye, Botswana. Preserving the memory of the Bangwaketse and the natural world of southern Botswana since the 1960s.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#about">About the Museum</a></li>
+        <li><a href="#collections">Collections</a></li>
+        <li><a href="#history">Our History</a></li>
+        <li><a href="#visit">Visit Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Get Involved</h4>
+      <ul>
+        <li><a href="#">School Programmes</a></li>
+        <li><a href="#">Research Access</a></li>
+        <li><a href="#">Heritage Tourism</a></li>
+        <li><a href="#">Community Projects</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Kgosi Bathoen II Museum, Kanye, Botswana. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  </script>
 </body>
 </html>
-
