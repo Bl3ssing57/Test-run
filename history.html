@@ -1,1 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>History — Kgosi Bathoen II Museum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --earth:   #2C1D10;
+      --sienna:  #7A3B1E;
+      --ochre:   #C97D2E;
+      --sand:    #E8D5B0;
+      --bone:    #F5EFE3;
+      --sky:     #8BAAB4;
+      --ink:     #1A1209;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --body:    'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+body {
+      background: var(--bone);
+      color: var(--ink);
+      font-family: var(--body);
+      font-weight: 300;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4vw;
+      background: transparent;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(245,239,227,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(122,59,30,0.15);
+    }
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--bone);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      line-height: 1.2;
+    }
+    nav.scrolled .nav-logo { color: var(--earth); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245,239,227,0.8);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-links a.active { color: var(--ochre); }
+    nav.scrolled .nav-links a { color: var(--sienna); }
+    nav.scrolled .nav-links a.active { color: var(--ochre); }
+    .nav-links a:hover { color: var(--ochre); }
+/* ── SHARED ── */
+    .kente-stripe {
+      height: 6px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--ochre)  0px,  var(--ochre)  16px,
+        var(--sienna) 16px, var(--sienna) 24px,
+        var(--sand)   24px, var(--sand)   32px,
+        var(--sienna) 32px, var(--sienna) 40px,
+        var(--ochre)  40px, var(--ochre)  56px,
+        var(--earth)  56px, var(--earth)  64px
+      );
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4.5vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--earth);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: var(--ochre);
+      color: var(--ink);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--sand); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: transparent;
+      color: var(--sand);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(232,213,176,0.35);
+      transition: border-color 0.25s, color 0.25s, transform 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--ochre); color: var(--ochre); transform: translateY(-2px); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      position: relative;
+      background: var(--earth);
+      padding: 16vh 8vw 8vh;
+      overflow: hidden;
+      min-height: 65vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .page-hero .kente-stripe {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+    }
+    .hero-ghost {
+      position: absolute;
+      right: -2vw;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--display);
+      font-size: clamp(7rem, 18vw, 20rem);
+      font-weight: 600;
+      color: rgba(255,255,255,0.025);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* Signature element for History page: a vertical rule with era markers */
+    .hero-spine {
+      position: absolute;
+      top: 6px; right: 14vw;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(201,125,46,0.4), rgba(201,125,46,0));
+      pointer-events: none;
+    }
+    .hero-spine::before,
+    .hero-spine::after {
+      content: '';
+      position: absolute;
+      left: -3px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--ochre);
+      opacity: 0.5;
+    }
+    .hero-spine::before { top: 0; }
+    .hero-spine::after  { top: 33%; }
+
+    .hero-arcs {
+      position: absolute;
+      top: 6px; right: 8vw;
+      width: 220px; height: 280px;
+      pointer-events: none;
+    }
+    .hero-arcs span {
+      position: absolute;
+      border-radius: 110px 110px 0 0;
+      border: 1px solid rgba(201,125,46,0.15);
+    }
+    .hero-arcs span:nth-child(1) { inset: 0; }
+    .hero-arcs span:nth-child(2) { inset: 24px 24px -24px; border-color: rgba(201,125,46,0.09); }
+    .hero-arcs span:nth-child(3) { inset: 48px 48px -48px; border-color: rgba(201,125,46,0.05); }
+
+    .page-hero-breadcrumb {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,125,46,0.6);
+      margin-bottom: 1.5rem;
+    }
+    .page-hero-breadcrumb a { color: rgba(201,125,46,0.6); text-decoration: none; }
+    .page-hero-breadcrumb a:hover { color: var(--ochre); }
+    .page-hero-breadcrumb span { margin: 0 0.5rem; }
+.page-hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 400;
+      line-height: 1.0;
+      color: var(--bone);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.25rem;
+    }
+    .page-hero h1 em { font-style: italic; color: var(--sand); }
+
+    .page-hero-sub {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--sky);
+      margin-bottom: 3rem;
+    }
+
+    /* Era nav pills inside hero */
+    .era-nav {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .era-pill {
+      padding: 0.55rem 1.4rem;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(232,213,176,0.5);
+      text-decoration: none;
+      border: 1px solid rgba(201,125,46,0.2);
+      border-right: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .era-pill:last-child { border-right: 1px solid rgba(201,125,46,0.2); }
+    .era-pill:hover { background: rgba(201,125,46,0.12); color: var(--ochre); }
+
+    /* ── INTRODUCTION ── */
+    .intro {
+      background: var(--bone);
+      padding: 7rem 8vw;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 8vw;
+      align-items: start;
+    }
+    .intro-aside {
+      padding-top: 0.4rem;
+    }
+    .intro-aside .section-label { margin-bottom: 2rem; }
+    .intro-aside-rule {
+      width: 40px; height: 2px;
+      background: var(--ochre);
+      margin-bottom: 2rem;
+    }
+    .intro-aside p {
+      font-size: 0.78rem;
+      color: var(--sienna);
+      line-height: 1.85;
+      opacity: 0.8;
+    }
+    .intro-body blockquote {
+      font-family: var(--display);
+      font-size: clamp(1.4rem, 2.5vw, 2.1rem);
+      font-style: italic;
+      color: var(--sienna);
+      line-height: 1.4;
+      border-left: 3px solid var(--ochre);
+      padding-left: 2rem;
+      margin-bottom: 3rem;
+    }
+    .intro-body p {
+      font-size: 0.95rem;
+      color: #3a2810;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+      max-width: 640px;
+        }
+    /* ── ERA I: BANGWAKETSE ORIGINS ── */
+    .era-origins {
+      background: var(--sand);
+      padding: 7rem 8vw;
+    }
+    .era-header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 5rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(122,59,30,0.2);
+    }
+    .era-number {
+      font-family: var(--display);
+      font-size: clamp(5rem, 10vw, 9rem);
+      font-weight: 600;
+      color: var(--sienna);
+      opacity: 0.18;
+      line-height: 1;
+      user-select: none;
+    }
+    .era-header-text .section-label { color: var(--sienna); opacity: 0.65; }
+    .era-header-text h2 { color: var(--earth); }
+    .era-header-text p {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--sienna);
+      line-height: 1.85;
+      max-width: 560px;
+    }
+
+    .two-col-text {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+    }
+    .two-col-text p {
+      font-size: 0.9rem;
+      color: #3a2810;
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── ERA II: COLONIAL ENCOUNTER ── */
+    .era-colonial {
+      background: var(--earth);
+      padding: 7rem 8vw;
+    }
+    .era-colonial .era-number { color: var(--ochre); opacity: 0.12; }
+    .era-colonial .era-header { border-bottom-color: rgba(201,125,46,0.15); }
+    .era-colonial .era-header-text h2 { color: var(--sand); }
+    .era-colonial .era-header-text .section-label { color: var(--ochre); opacity: 0.7; }
+    .era-colonial .era-header-text p { color: rgba(232,213,176,0.65); }
+
+    /* Full-width pull quote with ruled borders */
+    .pull-quote-full {
+      margin: 5rem 0;
+      padding: 4rem 0;
+      border-top: 1px solid rgba(201,125,46,0.25);
+      border-bottom: 1px solid rgba(201,125,46,0.25);
+      text-align: center;
+    }
+    .pull-quote-full p {
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 3.5vw, 3rem);
+      font-style: italic;
+      color: var(--sand);
+      line-height: 1.3;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .pull-quote-full cite {
+      display: block;
+      margin-top: 1.5rem;
+      font-family: var(--body);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      font-style: normal;
+      opacity: 0.7;
+      }
+    .colonial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+    }
+    .colonial-grid p {
+      font-size: 0.9rem;
+      color: rgba(232,213,176,0.65);
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    /* LMS building callout */
+    .building-callout {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 0;
+      border: 1px solid rgba(201,125,46,0.2);
+    }
+    .building-callout-visual {
+      background: var(--sienna);
+      position: relative;
+      min-height: 220px;
+      overflow: hidden;
+    }
+    .building-callout-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent, transparent 16px,
+        rgba(255,255,255,0.03) 16px, rgba(255,255,255,0.03) 17px
+      );
+    }
+    .building-callout-visual-label {
+      position: absolute;
+      bottom: 1rem; left: 1rem; right: 1rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--sand);
+      opacity: 0.7;
+    }
+    .building-callout-text {
+      padding: 2.5rem 3rem;
+      border-left: 1px solid rgba(201,125,46,0.2);
+    }
+    .building-callout-text h3 {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--sand);
+      margin-bottom: 0.75rem;
+    }
+    .building-callout-text p {
+      font-size: 0.83rem;
+      color: rgba(232,213,176,0.6);
+      line-height: 1.8;
+    }
+
+    /* ── ERA III: KGOSI AND THE COLLECTION ── */
+    .era-collection {
+      background: var(--bone);
+      padding: 7rem 8vw;
+    }
+
+    /* Horizontal scroll of collection categories */
+    .collection-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin: 4rem 0;
+      border: 1px solid rgba(122,59,30,0.12);
+    }
+    .strip-item {
+      padding: 2rem 1.5rem;
+      border-right: 1px solid rgba(122,59,30,0.12);
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .strip-item:last-child { border-right: none; }
+    .strip-item:hover { background: rgba(201,125,46,0.05); }
+    .strip-icon { font-size: 1.6rem; margin-bottom: 0.9rem; display: block; }
+    .strip-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .collection-body {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 6vw;
+      align-items: start;
+    }
+    .collection-body p {
+      font-size: 0.9rem;
+      color: #3a2810;
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+      }
+    .collection-aside {
+      background: var(--sienna);
+      padding: 2.5rem;
+      position: relative;
+    }
+    .collection-aside::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--ochre);
+    }
+    .collection-aside h3 {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--bone);
+      margin-bottom: 1.25rem;
+      line-height: 1.2;
+    }
+    .collection-aside ul {
+      list-style: none;
+    }
+    .collection-aside li {
+      font-size: 0.8rem;
+      color: rgba(232,213,176,0.7);
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      line-height: 1.5;
+    }
+    .collection-aside li:last-child { border-bottom: none; }
+    .collection-aside li::before {
+      content: '→';
+      color: var(--ochre);
+      margin-right: 0.6rem;
+      font-size: 0.75rem;
+    }
+
+    /* ── ERA IV: FOUNDING THE MUSEUM ── */
+    .era-founding {
+      background: var(--sienna);
+      padding: 7rem 8vw;
+    }
+    .era-founding .era-number { color: var(--sand); opacity: 0.1; }
+    .era-founding .era-header { border-bottom-color: rgba(232,213,176,0.15); }
+    .era-founding .era-header-text h2 { color: var(--bone); }
+    .era-founding .era-header-text .section-label { color: var(--sand); opacity: 0.55; }
+    .era-founding .era-header-text p { color: rgba(232,213,176,0.65); }
+
+    /* Timeline within founding section */
+    .founding-timeline {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0;
+    }
+    .ft-rail {
+      position: relative;
+      padding-right: 3rem;
+    }
+    .ft-rail::after {
+      content: '';
+      position: absolute;
+      top: 8px; bottom: 0;
+      right: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(201,125,46,0.5), rgba(201,125,46,0));
+    }
+    .ft-year {
+      font-family: var(--display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 600;
+      color: var(--ochre);
+      opacity: 0.55;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .ft-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(232,213,176,0.4);
+    }
+
+    .ft-events {
+      padding-left: 3rem;
+    }
+    .ft-event {
+      padding-bottom: 3.5rem;
+      position: relative;
+    }
+    .ft-event::before {
+      content: '';
+      position: absolute;
+      left: -3rem;
+      top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--ochre);
+      opacity: 0.5;
+      transform: translateX(-50%);
+    }
+    .ft-event:last-child { padding-bottom: 0; }
+    .ft-event h3 {
+      font-family: var(--display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--sand);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .ft-event p {
+      font-size: 0.875rem;
+      color: rgba(232,213,176,0.65);
+      line-height: 1.85;
+      max-width: 580px;
+    }
+
+    /* ── ERA V: DORMANCY ── */
+    .era-dormancy {
+      background: var(--bone);
+      padding: 7rem 8vw;
+    }
+
+    .dormancy-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8vw;
+      align-items: start;
+      margin-top: 4rem;
+    }
+    .dormancy-layout p {
+      font-size: 0.9rem;
+      color: #3a2810;
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+                                    }
+    /* Faded newspaper-style pull quote for dormancy */
+    .dormancy-pull {
+      border-top: 2px solid rgba(122,59,30,0.2);
+      border-bottom: 2px solid rgba(122,59,30,0.2);
+      padding: 2.5rem 0;
+      margin: 2rem 0;
+    }
+    .dormancy-pull p {
+      font-family: var(--display);
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-style: italic;
+      color: var(--sienna);
+      line-height: 1.45;
+      opacity: 0.8;
+      margin: 0;
+    }
+
+    /* Visual placeholder for dormancy — a faded grid evoking dust and storage */
+    .dormancy-visual {
+      position: relative;
+    }
+    .dormancy-box {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--sand);
+      position: relative;
+      overflow: hidden;
+    }
+    .dormancy-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(122,59,30,0.06) 28px, rgba(122,59,30,0.06) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(122,59,30,0.06) 28px, rgba(122,59,30,0.06) 29px);
+    }
+    .dormancy-box-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .dormancy-box-text .big-word {
+      font-family: var(--display);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 600;
+      color: var(--sienna);
+      opacity: 0.15;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .dormancy-box-text p {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--sienna);
+      opacity: 0.4;
+    }
+    .dormancy-box-offset {
+      position: absolute;
+      bottom: -12px; right: -12px;
+      width: 75%; height: 75%;
+      border: 1px solid rgba(122,59,30,0.2);
+    }
+
+    /* ── ERA VI: REVIVAL 1998 ── */
+    .era-revival {
+      background: var(--earth);
+      padding: 7rem 8vw;
+    }
+    .era-revival .era-number { color: var(--ochre); opacity: 0.12; }
+    .era-revival .era-header { border-bottom-color: rgba(201,125,46,0.15); }
+    .era-revival .era-header-text h2 { color: var(--sand); }
+    .era-revival .era-header-text .section-label { color: var(--ochre); opacity: 0.7; }
+    .era-revival .era-header-text p { color: rgba(232,213,176,0.65); }
+
+    .revival-body {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 6vw;
+      align-items: start;
+    }
+    .revival-body p {
+      font-size: 0.9rem;
+      color: rgba(232,213,176,0.7);
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+    .revival-body p strong { color: var(--sand); font-weight: 500; }
+
+    /* Kesupile feature card */
+    .kesupile-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,125,46,0.2);
+      padding: 2.5rem;
+    }
+    .kesupile-card::before {
+      content: '';
+      display: block;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--sienna);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .kesupile-card h3 {
+      font-family: var(--display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--sand);
+      margin-bottom: 0.3rem;
+    }
+    .kesupile-card .role {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      opacity: 0.7;
+      margin-bottom: 1.25rem;
+    }
+    .kesupile-card p {
+      font-size: 0.82rem;
+      color: rgba(232,213,176,0.6);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    /* What the revival restored — checklist */
+    .revival-restored {
+      margin-top: 5rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(201,125,46,0.15);
+    }
+    .revival-restored h3 {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--sand);
+      margin-bottom: 2rem;
+    }
+    .restored-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .restored-item {
+      padding: 2rem 2rem 2rem 0;
+      border-right: 1px solid rgba(201,125,46,0.1);
+      padding-right: 2rem;
+    }
+    .restored-item:last-child { border-right: none; }
+    .restored-item h4 {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ochre);
+      margin-bottom: 0.5rem;
+    }
+    .restored-item p {
+      font-size: 0.8rem;
+      color: rgba(232,213,176,0.55);
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    /* ── TODAY ── */
+    .era-today {
+      background: var(--sand);
+      padding: 7rem 8vw;
+    }
+    .era-today .era-number { color: var(--sienna); opacity: 0.12; }
+    .era-today .era-header { border-bottom-color: rgba(122,59,30,0.18); }
+    .era-today .era-header-text h2 { color: var(--earth); }
+    .era-today .era-header-text .section-label { color: var(--sienna); opacity: 0.6; }
+    .era-today .era-header-text p { color: var(--sienna); opacity: 0.85; }
+
+    .today-prose {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+    }
+    .today-prose p {
+      font-size: 0.9rem;
+      color: #3a2810;
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      background: var(--earth);
+      padding: 6rem 8vw;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+      align-items: center;
+    }
+    .cta .section-label { color: var(--ochre); }
+    .cta h2 { color: var(--bone); margin-top: 0.5rem; }
+    .cta p {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: rgba(232,213,176,0.6);
+      max-width: 520px;
+      line-height: 1.8;
+    }
+    .cta-actions { display: flex; flex-direction: column; gap: 1rem; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 4rem 8vw 3rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 4rem;
+      border-top: 4px solid transparent;
+      border-image: repeating-linear-gradient(
+        90deg,
+        var(--ochre)  0px,  var(--ochre)  16px,
+        var(--sienna) 16px, var(--sienna) 24px,
+        var(--earth)  24px, var(--earth)  40px
+      ) 4;
+    }
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      color: var(--sand);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .footer-brand em { font-style: italic; color: var(--ochre); }
+    footer > div > p {
+      font-size: 0.78rem;
+      color: rgba(232,213,176,0.4);
+      line-height: 1.8;
+    }
+    .footer-col h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.6rem; }
+    .footer-col a {
+      font-size: 0.8rem;
+      color: rgba(232,213,176,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--ochre); }
+    .footer-bottom {
+      grid-column: 1 / -1;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.72rem;
+      color: rgba(232,213,176,0.25);
+    }
+    
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .intro, .two-col-text, .colonial-grid, .collection-body,
+      .dormancy-layout, .revival-body, .today-prose, .cta { grid-template-columns: 1fr; }
+      .collection-strip { grid-template-columns: repeat(3, 1fr); }
+      .strip-item:nth-child(3) { border-right: none; }
+      .strip-item:nth-child(4), .strip-item:nth-child(5) { border-top: 1px solid rgba(122,59,30,0.12); }
+      .restored-grid { grid-template-columns: 1fr; }
+      .restored-item { border-right: none; border-bottom: 1px solid rgba(201,125,46,0.1); padding: 1.5rem 0; }
+      .building-callout { grid-template-columns: 1fr; }
+      .building-callout-visual { min-height: 140px; }
+      .building-callout-text { border-left: none; border-top: 1px solid rgba(201,125,46,0.2); }
+      .founding-timeline { grid-template-columns: 1fr; }
+      .ft-rail { display: none; }
+      .ft-events { padding-left: 0; }
+      .ft-event::before { display: none; }
+      .era-header { grid-template-columns: 1fr; gap: 1rem; }
+      .era-number { display: none; }
+      .dormancy-visual { display: none; }
+      footer { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      .cta-actions { flex-direction: row; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">Kgosi Bathoen II<br>Museum</a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#collections">Collections</a></li>
+      <li><a href="history.html" class="active">History</a></li>
+      <li><a href="index.html#visit">Visit</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <div class="kente-stripe"></div>
+    <div class="hero-ghost">History</div>
+    <div class="hero-spine"></div>
+    <div class="hero-arcs">
+      <span></span><span></span><span></span>
+    </div>
+
+    <p class="page-hero-breadcrumb">
+      <a href="index.html">Home</a>
+      <span>·</span>
+      History
+    </p>
+    <h1>
+      The Long<br><em>Story</em>
+    </h1>
+    <p class="page-hero-sub">From ancient Bangwaketse settlement to a revived national institution</p>
+
+    <nav class="era-nav" aria-label="Jump to era">
+      <a href="#origins"    class="era-pill">Origins</a>
+      <a href="#colonial"   class="era-pill">Colonial Era</a>
+      <a href="#collection" class="era-pill">The Collection</a>
+      <a href="#founding"   class="era-pill">Museum Founded</a>
+      <a href="#dormancy"   class="era-pill">Dormancy</a>
+      <a href="#revival"    class="era-pill">Revival 1998</a>
+      <a href="#today"      class="era-pill">Today</a>
+    </nav>
+  </header>
+  <!-- INTRODUCTION -->
+  <section class="intro">
+    <div class="intro-aside">
+      <p class="section-label">The Full Account</p>
+      <div class="intro-aside-rule"></div>
+      <p>
+        This is a history told in six eras — from the deep past of the Bangwaketse people to the present day of a living institution. Each era shaped what the museum is, and what it holds.
+      </p>
+    </div>
+    <div class="intro-body">
+      <blockquote>
+        The story of this museum is inseparable from the story of its people, its land, and the one man who understood that both deserved to be remembered.
+      </blockquote>
+      <p>
+        Kgosi Bathoen II Museum exists because one paramount chief believed that heritage is knowledge — and that knowledge, if not recorded and protected, disappears. But the institution he founded is rooted in a history far older than his own: the history of the Bangwaketse people, their relationship with the southern Botswana landscape, and their encounter with the forces — colonial, political, and cultural — that shaped modern Botswana.
+      </p>
+      <p>
+        The pages that follow trace that history across six distinct eras. They are not presented as a triumphant narrative, but as an honest account of vision, disruption, survival, and renewal. The museum's present character — outward-facing, community-rooted, committed to access — was forged by all of them.
+      </p>
+    </div>
+  </section>
+
+  <!-- ERA I: ORIGINS -->
+  <section class="era-origins" id="origins">
+    <div class="era-header">
+      <div class="era-number">I</div>
+      <div class="era-header-text">
+        <p class="section-label">Era I · Deep Past</p>
+        <h2>The Bangwaketse<br>and Their Land</h2>
+        <p>Long before colonial borders were drawn across southern Africa, the Bangwaketse — a Tswana-speaking people — established themselves across the terrain of what is now Botswana's Southern District. Their history is the foundation on which this museum rests.</p>
+      </div>
+    </div>
+
+    <div class="two-col-text">
+      <div>
+        <p>
+          The Bangwaketse are one of the principal Tswana groupings of southern Africa, with a history of settlement, governance, and cultural identity stretching back many generations before the arrival of European missionaries and administrators. Their capital at Kanye — a name that would later become the home of the museum — was established as a seat of chiefly authority and community life.
+        </p>
+        <p>
+          The landscape the Bangwaketse inhabited shaped everything about them: their agricultural practices, their relationship with wildlife, their material culture, and their oral traditions. The Kalahari and its margins are not a simple environment. They demand adaptation, knowledge, and a deep familiarity with the patterns of land and season that only sustained habitation builds.
+        </p>
+      </div>
+      <div>
+        <p>
+          Archaeological evidence — some of which the museum now holds — attests to centuries of human presence across the region. Settlements, tools, ceramics, and the physical residue of social organisation speak to a community that was neither static nor isolated, but actively engaged with its neighbours and its environment.
+        </p>
+        <p>
+          The oral traditions of the Bangwaketse carry this history forward where material evidence alone cannot reach. Genealogies, accounts of migrations and conflicts, records of treaties and alliances, and the memory of significant events were maintained through structured oral practice — a form of knowledge-keeping that Kgosi Bathoen II would later recognise as worthy of the same respect as any written archive.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ERA II: COLONIAL ENCOUNTER -->
+  <section class="era-colonial" id="colonial">
+    <div class="era-header">
+      <div class="era-number">II</div>
+      <div class="era-header-text">
+        <p class="section-label">Era II · 19th–Early 20th Century</p>
+        <h2>Colonial Encounter<br>and Its Legacies</h2>
+        <p>The arrival of European missionaries and the eventual establishment of British colonial administration transformed the political landscape of the Bangwaketse — and created the conditions in which a museum could eventually emerge.</p>
+      </div>
+    </div>
+
+    <div class="pull-quote-full">
+      <p>
+        "The building that would one day house the museum was itself a product of the colonial encounter — a London Missionary Society structure repurposed, decades later, to hold the knowledge that colonialism had sought to displace."
+      </p>
+      <cite>Kgosi Bathoen II Museum — Institutional History</cite>
+    </div>
+
+    <div class="colonial-grid">
+      <div>
+        <p>
+          The London Missionary Society arrived in the region in the nineteenth century, establishing mission stations and schools that introduced formal western education to communities including the Bangwaketse. This encounter was not simple: it disrupted existing knowledge systems even as it opened access to new ones. Traditional leaders who engaged with missionary education often did so strategically, seeking to acquire tools useful for navigating an increasingly complex political world.
+        </p>
+        <p>
+          The establishment of the Bechuanaland Protectorate in 1885 placed the Bangwaketse under British colonial administration, though the relationship between the protectorate authorities and the traditional leaders was one of negotiation rather than straightforward domination. Bangwaketse chiefs retained significant authority within their own territories, and their position gave them a vantage point from which to observe and respond to the changes colonial rule was bringing.
+        </p>
+      </div>
+      <div>
+        <p>
+          It was within this context that Bathoen Gaseitsiwe — the man who would become Kgosi Bathoen II — received his education. He was among a small number of traditional leaders of his generation who engaged deeply with formal schooling, and the experience shaped his understanding of the value of documentation, classification, and systematic record-keeping. He did not see these as western impositions; he saw them as tools that could be put to work in the service of his own people's heritage.
+        </p>
+        <p>
+          The colonial period also brought naturalists, administrators, and travellers who documented the fauna and flora of the region in ways that influenced Kgosi Bathoen II's own approach to natural history collection. His interest in taxonomy and specimen preservation drew on these traditions while serving an entirely different purpose: the documentation of the natural environment of the Bangwaketse homeland.
+        </p>
+      </div>
+    </div>
+
+    <div class="building-callout">
+      <div class="building-callout-visual">
+        <p class="building-callout-visual-label">The London Missionary Society building, Kanye — later repurposed as the museum</p>
+      </div>
+      <div class="building-callout-text">
+        <h3>The Building That Became the Museum</h3>
+        <p>
+          Among the structures the London Missionary Society left behind in Kanye was a substantial building that would, in the 1960s, be repurposed by Kgosi Bathoen II as the first home of his museum. The choice was deliberate: colonial infrastructure placed in service of indigenous knowledge. The building's history is part of the museum's history, a material reminder of the complex conditions out of which the institution grew.
+        </p>
+      </div>
+    </div>
+  </section>
+<!-- ERA III: THE COLLECTION -->
+  <section class="era-collection" id="collection">
+    <div class="era-header">
+      <div class="era-number">III</div>
+      <div class="era-header-text">
+        <p class="section-label">Era III · Mid 20th Century</p>
+        <h2>A Lifetime<br>of Collecting</h2>
+        <p>Before there was a museum, there was a collection. For years before and during his reign as Kgosi, Bathoen Gaseitsiwe accumulated objects, specimens, images, and oral records that would eventually form the institution's founding holdings.</p>
+      </div>
+    </div>
+
+    <div class="collection-strip">
+      <div class="strip-item">
+        <span class="strip-icon">🦁</span>
+        <span class="strip-label">Natural History Specimens</span>
+      </div>
+      <div class="strip-item">
+        <span class="strip-icon">🏺</span>
+        <span class="strip-label">Archaeological Artefacts</span>
+      </div>
+      <div class="strip-item">
+        <span class="strip-icon">🧶</span>
+        <span class="strip-label">Ethnographic Objects</span>
+      </div>
+      <div class="strip-item">
+        <span class="strip-icon">📷</span>
+        <span class="strip-label">Historical Photographs</span>
+      </div>
+      <div class="strip-item">
+        <span class="strip-icon">🗣</span>
+        <span class="strip-label">Oral Traditions</span>
+      </div>
+    </div>
+
+    <div class="collection-body">
+      <div>
+        <p>
+          Kgosi Bathoen II's collecting began with natural history. He had a strong intellectual curiosity about the fauna of the Kalahari and the surrounding region, and he approached this interest with something approaching a scientist's discipline: collecting and preserving mounted animal heads and natural specimens, maintaining records, and engaging with the taxonomic frameworks that European naturalists had developed for classifying the wildlife of southern Africa.
+        </p>
+        <p>
+          This was not mere hobbyism. Kgosi Bathoen II understood that the natural world of the Bangwaketse homeland was itself a form of heritage — that the animals, plants, and ecosystems that his people had lived alongside for generations were worth documenting precisely because development, hunting pressure, and environmental change were transforming them. His natural history collection was an act of preservation as much as curiosity.
+        </p>
+        <p>
+          Over time, his collecting expanded. Cultural artefacts — tools, household objects, ceremonial items, objects of everyday life — began to enter his holdings alongside the natural history specimens. So too did photographs: images of Bangwaketse people, ceremonies, and landscapes that captured moments in the community's life that oral tradition alone could not fully convey.
+        </p>
+        <p>
+          The most significant expansion, however, was his engagement with oral tradition. Kgosi Bathoen II understood that the stories, genealogies, and historical accounts held in the memories of elders were as important as any physical object — and perhaps more fragile, because they could disappear within a single generation if not recorded. His effort to document these traditions reflected a genuinely integrated view of heritage: one in which the natural, the material, and the oral were all part of the same continuum of knowledge.
+        </p>
+      </div>
+      <div class="collection-aside">
+        <h3>What He Collected</h3>
+        <ul>
+          <li>Mounted animal specimens and natural history records documenting Kalahari fauna</li>
+          <li>Stone tools, ceramics, and objects from regional archaeological sites</li>
+          <li>Household tools, agricultural implements, and domestic objects of the Bangwaketse</li>
+          <li>Ceremonial and ritual objects reflecting community spiritual practice</li>
+          <li>Photographic records of people, places, and events across the Southern District</li>
+          <li>Transcribed and recorded oral histories from community elders</li>
+          <li>Genealogical records tracing Bangwaketse lineages and leadership</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ERA IV: FOUNDING -->
+  <section class="era-founding" id="founding">
+    <div class="era-header">
+      <div class="era-number">IV</div>
+      <div class="era-header-text">
+        <p class="section-label">Era IV · 1960s</p>
+        <h2>The Museum<br>Is Founded</h2>
+        <p>In the 1960s, Kgosi Bathoen II's personal collection became a public institution. Housed in a repurposed London Missionary Society building in Kanye, the museum became one of the earliest formal heritage spaces in Botswana.</p>
+      </div>
+    </div>
+
+    <div class="founding-timeline">
+      <div class="ft-rail">
+        <div class="ft-year">1960s</div>
+        <div class="ft-tag">Founding decade</div>
+      </div>
+      <div class="ft-events">
+        <div class="ft-event">
+          <h3>A Private Collection Becomes a Public Space</h3>
+          <p>
+            The decision to establish a formal museum in Kanye marked a deliberate shift in Kgosi Bathoen II's relationship to his collection. What had been a personal act of preservation — rooted in intellectual curiosity and a sense of cultural responsibility — became an institutional commitment. The museum was not founded because there was a policy mandate or external funding; it was founded because the Kgosi believed it was necessary.
+          </p>
+        </div>
+        <div class="ft-event">
+          <h3>The London Missionary Society Building</h3>
+          <p>
+            The choice of building was significant. The London Missionary Society structure in Kanye was already part of the community's landscape — a presence from the colonial era that had served various purposes over the decades. Its repurposing as a museum carried symbolic weight: a building associated with the transmission of European knowledge systems was now being used to house and protect the heritage of the people who had lived alongside and sometimes been transformed by that encounter. The repurposing was an act of reclamation.
+          </p>
+        </div>
+        <div class="ft-event">
+          <h3>Among Botswana's First Heritage Institutions</h3>
+          <p>
+            At the time of its founding, Botswana — which would not gain independence from Britain until 1966 — had very few formal heritage institutions. The Kgosi Bathoen II Museum was therefore a pioneer: not only in its collection and its physical form, but in the very idea that local, community-based heritage was worth institutionalising. Its founding contributed to early national conversations about cultural preservation, and it is now regarded as foundational in the development of museum practice in Botswana.
+          </p>
+        </div>
+        <div class="ft-event">
+          <h3>An Integrated Vision of Knowledge</h3>
+          <p>
+            From its founding, the museum reflected Kgosi Bathoen II's integrated understanding of heritage. Natural history and cultural history shared the same space. The environment and its people were presented not as separate domains but as a single, connected story. This approach was unusual for its time — most museums of the period drew firm lines between natural and cultural collections — and it remains a distinctive feature of the institution today.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ERA V: DORMANCY -->
+  <section class="era-dormancy" id="dormancy">
+    <div class="era-header">
+      <div class="era-number">V</div>
+      <div class="era-header-text">
+        <p class="section-label">Era V · Post-Independence</p>
+        <h2>A Period<br>of Quiet</h2>
+        <p>Following its initial flourishing, the museum entered a period of decline. The collections survived — but the institution lost its active public life for a generation.</p>
+      </div>
+    </div>
+
+    <div class="dormancy-layout">
+      <div>
+        <p>
+          The years following Botswana's independence in 1966 were a time of profound national transformation. A new government, new institutions, and new priorities reshaped the country's public life. In this context, many smaller cultural institutions — particularly those with strong ties to pre-independence traditional leadership — found their footing uncertain.
+        </p>
+        <div class="dormancy-pull">
+          <p>
+            The collections did not disappear. They waited — in storage, in memory, and in the minds of those who knew what they represented — for the moment when someone would return them to public life.
+          </p>
+        </div>
+        <p>
+          The museum's decline was not a single event but a gradual withdrawal. Funding diminished. The programmes that had drawn visitors and researchers lost their momentum. The building, no longer actively maintained as a museum, ceased to function as a public space. The founding vision — of an institution that would serve as a custodian of Bangwaketse heritage — went into abeyance.
+        </p>
+        <p>
+          The causes were multiple and not entirely within the museum's control. The political landscape of post-independence Botswana was not always hospitable to institutions associated with traditional chiefly authority. Resources were scarce. And the broader infrastructure for supporting community heritage institutions — the networks of funders, scholars, and policymakers that sustain such places — was still being built.
+        </p>
+        <p>
+          Yet the collections survived. Objects, photographs, and records that Kgosi Bathoen II had accumulated over a lifetime were preserved through this difficult period, held in place by the accumulated weight of their own significance. The museum's dormancy was a pause, not an ending.
+        </p>
+      </div>
+      <div class="dormancy-visual">
+        <div class="dormancy-box-offset"></div>
+        <div class="dormancy-box">
+          <div class="dormancy-box-text">
+            <div class="big-word">Quiet</div>
+            <p>Collections preserved<br>through dormancy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ERA VI: REVIVAL -->
+  <section class="era-revival" id="revival">
+    <div class="era-header">
+      <div class="era-number">VI</div>
+      <div class="era-header-text">
+        <p class="section-label">Era VI · 1998</p>
+        <h2>The Community<br>Revives the Museum</h2>
+        <p>In 1998, under the leadership of Abraham Kesupile and a cohort of community-based cultural practitioners, the museum was brought back to life. This was not a restoration from above — it was a recovery from within.</p>
+      </div>
+    </div>
+
+    <div class="revival-body">
+      <div>
+        <p>
+          The 1998 revival began not with an institutional mandate or a government programme, but with a small group of people who understood the museum's collections as a living resource — not a historical relic — and who were unwilling to let them remain inaccessible to the community they belonged to.
+        </p>
+        <p>
+          <strong>Abraham Kesupile</strong> led the effort. A community-based cultural practitioner with a deep commitment to heritage preservation, Kesupile brought together others who shared his conviction that the museum's collections were worth fighting for. Their work was practical as well as visionary: they addressed the physical condition of the collections, restored the building's function as a public space, and rebuilt the programmes and relationships that give a museum its life.
+        </p>
+        <p>
+          The revival was in many ways a second founding — and in some respects a more significant one than the first. Kgosi Bathoen II had created the institution from the position of a paramount chief, with the authority and resources that came with that role. Kesupile and his collaborators had neither. What they had was conviction, community support, and an understanding of what would be lost if they did nothing.
+        </p>
+        <p>
+          The orientation the 1998 revival gave the museum — outward-facing, community-embedded, committed to access as a core principle rather than an afterthought — has defined the institution ever since. It is not an exaggeration to say that the museum visitors encounter today is as much a product of 1998 as it is of the 1960s.
+        </p>
+
+        <div class="revival-restored">
+          <h3>What the Revival Restored</h3>
+          <div class="restored-grid">
+            <div class="restored-item">
+              <h4>Public Access</h4>
+              <p>The collections were returned to public life — open to visitors, researchers, school groups, and community members.</p>
+            </div>
+            <div class="restored-item">
+              <h4>Active Programming</h4>
+              <p>Education visits, exhibitions, and community events restored the museum's role as a living cultural space, not just a repository.</p>
+            </div>
+            <div class="restored-item">
+              <h4>Institutional Continuity</h4>
+              <p>The founding vision of Kgosi Bathoen II was renewed and carried forward — ensuring the museum's purpose survived the dormancy intact.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kesupile-card">
+        <h3>Abraham Kesupile</h3>
+        <p class="role">Leader of the 1998 Revival</p>
+        <p>
+          A community-based cultural practitioner whose dedication to heritage preservation drove the effort to restore the museum after its long dormancy. Kesupile's work demonstrated that the preservation of cultural heritage does not depend on institutional authority or external resources alone — it depends on people who understand its value and act on that understanding.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ERA TODAY -->
+  <section class="era-today" id="today">
+    <div class="era-header">
+      <div class="era-number">VII</div>
+      <div class="era-header-text">
+        <p class="section-label">Era VII · Present Day</p>
+        <h2>A Living Institution<br>in Kanye</h2>
+        <p>Today the Kgosi Bathoen II Museum operates as an active heritage institution — growing its collections, deepening its community relationships, and serving as a bridge between the deep past of the Bangwaketse and the needs of present-day Botswana.</p>
+      </div>
+    </div>
+
+    <div class="today-prose">
+      <div>
+        <p>
+          The museum's present holdings encompass archaeological materials, ethnographic collections, oral histories, photographs, and natural history specimens — a range that reflects both the founder's integrated vision and the additions made by researchers, community members, and institutional partners over the decades since the 1998 revival.
+        </p>
+        <p>
+          Education is a central part of the museum's current work. School groups from across the Southern District visit regularly, and the museum has developed curriculum-aligned programmes that connect young Batswana with the history and culture of their region. For many students, the museum is their first encounter with a heritage institution — and their first opportunity to see their own community's history given the weight that formal preservation implies.
+        </p>
+      </div>
+      <div>
+        <p>
+          Research is equally important. The museum's archival collections support work by university scholars, independent researchers, and community historians who are engaged in the ongoing project of understanding and documenting the history of southern Botswana. The museum's staff provide access, guidance, and expertise that makes this research possible.
+        </p>
+        <p>
+          Heritage tourism has become a growing dimension of the museum's reach. Visitors from across Botswana and beyond come to Kanye to encounter the collections and the story they tell — a story that is distinctively local and at the same time connected to the larger histories of southern Africa, colonialism, independence, and cultural survival.
+        </p>
+        <p>
+          The legacy of Kgosi Bathoen II — and the commitment of Abraham Kesupile and those who worked with him — lives in all of this. The museum is not a monument to the past. It is a working institution, shaped by the past but oriented toward the present and the future.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div>
+      <p class="section-label">Continue Exploring</p>
+      <h2>The History Lives<br>in the Collections</h2>
+      <p>Every artefact, photograph, and oral record in the museum's holdings is part of this story. Come and encounter them in person — or learn more about what we hold and how to access it.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="index.html#collections" class="btn-primary">Explore Collections</a>
+      <a href="index.html#visit" class="btn-ghost">Plan Your Visit</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-brand">Kgosi Bathoen II<br><em>Museum</em></div>
+      <p>A living heritage institution in Kanye, Botswana. Preserving the memory of the Bangwaketse and the natural world of southern Botswana since the 1960s.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="about.html">About the Museum</a></li>
+        <li><a href="index.html#collections">Collections</a></li>
+        <li><a href="history.html">Our History</a></li>
+        <li><a href="index.html#visit">Visit Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Get Involved</h4>
+      <ul>
+        <li><a href="#">School Programmes</a></li>
+        <li><a href="#">Research Access</a></li>
+        <li><a href="#">Heritage Tourism</a></li>
+        <li><a href="#">Community Projects</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Kgosi Bathoen II Museum, Kanye, Botswana. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  </script>
+</body>
+</html>
